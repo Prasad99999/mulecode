@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:file="http://www.mulesoft.org/schema/mule/file" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="234501da-c8ac-4b56-869d-99adf9ea2b62" >
+		<http:listener-connection host="localhost" port="8081" />
+	</http:listener-config>
+	<file:config name="File_Config" doc:name="File Config" doc:id="860b5618-6e86-4a59-806f-bd299bace52a" >
+		<file:connection workingDir="D:\csv" />
+	</file:config>
+	<flow name="file_readFlow" doc:id="dd67f763-4f7e-4721-a4f8-078dff667225" >
+		<http:listener doc:name="Listener" doc:id="6854dfe7-8f29-4096-b988-c3bbb0b1e340" config-ref="HTTP_Listener_config" path="/read"/>
+		<file:read doc:name="Read" doc:id="8c545274-1954-4585-b82c-0e3d91910ee4" config-ref="File_Config" path="D:\csv\empdata new1.csv"/>
+		<logger level="INFO" doc:name="Logger" doc:id="1982f0c2-f377-4d0e-a272-9e5fc80fc985" message="#[payload]"/>
+	</flow>
+</mule>
